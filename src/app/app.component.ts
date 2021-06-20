@@ -1,4 +1,6 @@
 import { Component,OnInit } from '@angular/core';
+import { ITodo } from './interfaces/itodo';
+import { TodoService } from './services/todo.service';
 
 @Component({
   selector: 'app-root',
@@ -7,29 +9,18 @@ import { Component,OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit{
   title = 'Todos';
-  todoList: any [] = [];
+  todoList: ITodo[] = [];
   todoTitle: string;
   todoId: number = 0;
+
+  constructor(private todoService: TodoService){
+    
+  }
   ngOnInit() {
     this.todoTitle = '';
-    this.todoList = [
-      // example of how to make an item in todo list
-      { title: 'Install Angular CLI', isDone: false },
-    
-    ];
+    this.todoList = this.todoService.getTodos();
   }
-  addTodo():void {
-    this.todoList.push({
-      title: this.todoTitle,
-      isDone: false
-    });
-    
-    // resets our todoTitle variable to an empty string
-    this.todoTitle = '';
-  }
-  deleteTodo(todo:any) {
-    const index = this.todoList.findIndex(todoItem => todoItem === todo);
-    this.todoList.splice(index, 1);
-  }
+  
+
 
 }
